@@ -26,9 +26,9 @@ void ht_put(hashtable_t *ht, char *key, void *val) {
   unsigned int idx = hash(key) % ht->size;
   bucket_t *b = malloc(sizeof(bucket_t));
   
- for (int i = 0; i <= ht->size; i++){
-     if ht->buckets[i] == b->key:
-         ht->buckets[i] = b->val;
+ while(b != NULL){
+     if ht->buckets[idx][0] == b->key:
+         ht->buckets[idx][1] = b->val;
     else:
       b->key = key;
       b->val = val;
