@@ -25,10 +25,17 @@ void ht_put(hashtable_t *ht, char *key, void *val) {
   /* FIXME: the current implementation doesn't update existing entries */
   unsigned int idx = hash(key) % ht->size;
   bucket_t *b = malloc(sizeof(bucket_t));
-  b->key = key;
-  b->val = val;
-  b->next = ht->buckets[idx];
-  ht->buckets[idx] = b;
+  
+ for (int i = 0; i <= ht->size; i++){
+     if ht->buckets[i] == b->key:
+         ht->buckets[i] = b->val;
+    else:
+      b->key = key;
+      b->val = val;
+      b->next = ht->buckets[idx];
+      ht->buckets[idx] = b;
+ } 
+
 }
 
 void *ht_get(hashtable_t *ht, char *key) {
