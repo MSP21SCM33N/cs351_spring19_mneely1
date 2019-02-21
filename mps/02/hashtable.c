@@ -24,7 +24,7 @@ hashtable_t *make_hashtable(unsigned long size) {
 void ht_put(hashtable_t *ht, char *key, void *val) {
   /* FIXME: the current implementation doesn't update existing entries */
   unsigned int idx = hash(key) % ht->size;
-  bucket_t *node = ht->buckets[idx] // Created a bucket pointer nodeto get the element in the hashtable
+  bucket_t *node = ht->buckets[idx]; // Created a bucket pointer nodeto get the element in the hashtable
   
   while(node != NULL){
      if(strcmp(key, node->key) == 0){
