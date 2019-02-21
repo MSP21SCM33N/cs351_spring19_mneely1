@@ -89,6 +89,41 @@ void free_hashtable(hashtable_t *ht) {
 
 /* TODO */
 void  ht_del(hashtable_t *ht, char *key) {
+  unsigned int idx = hash(key) % ht->size;
+  bucket_t *node = ht->buckets[idx];
+  bucket_t *temp;
+  
+  if(strcmp(node->key, key)==0){
+      ht->buckets[idx] = node->next; // Sets the current head node to the next node
+      free(node->val);
+      free(node->key);
+      free(node);
+      return;
+  }
+
+   while(node != NULL){
+       if(strcmp(node->next->key, key)==0){
+           if(node->next == node->next->next){// the last item in the last points to itself
+               free(node->next->val);
+               free(node->next->key);
+               free(node->next);
+               node->next = node;
+               return;
+           }
+           else{
+               temp= node->next->next;
+               free(node->next->val);
+               free(node->next->key);
+               free(node->next);
+               node->next = temp;
+               return;
+
+           }
+       }
+       node = node->next;
+   }
+
+
 }
 
 void  ht_rehash(hashtable_t *ht, unsigned long newsize) {
