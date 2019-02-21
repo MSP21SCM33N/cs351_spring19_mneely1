@@ -84,7 +84,7 @@ void free_hashtable(hashtable_t *ht) {
       }
   }
   free(ht->buckets);
-  free(ht) // FIXME: must free all substructures!
+  free(ht); // FIXME: must free all substructures!
 }
 
 /* TODO */
