@@ -71,7 +71,20 @@ void ht_iter(hashtable_t *ht, int (*f)(char *, void *)) {
 }
 
 void free_hashtable(hashtable_t *ht) {
-  free(ht); // FIXME: must free all substructures!
+  bucket_t *node;
+  bucket_t *temp; // Created to point to the same memory space as the node pointer
+  for(int i = 0; i <ht->size; i++){
+      node = ht->buckets[i];
+      while (node != NULL){
+        temp = node; // Allows us to free the memory space as the node while still being able to access the next node
+        node = node->next;
+        free(temp->key);
+        free(temp->val);
+        free(temp);
+      }
+  }
+  free(ht->buckets);
+  free(ht) // FIXME: must free all substructures!
 }
 
 /* TODO */
