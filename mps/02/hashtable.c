@@ -111,11 +111,11 @@ void  ht_del(hashtable_t *ht, char *key) {
                return;
            }
            else{
-               temp= node->next->next;
+               temp= node->next->next;// Stores the node after the one we are trying to delete
                free(node->next->val);
                free(node->next->key);
                free(node->next);
-               node->next = temp;
+               node->next = temp;// Now the node points to the next node after the deleted one
                return;
 
            }
@@ -127,4 +127,20 @@ void  ht_del(hashtable_t *ht, char *key) {
 }
 
 void  ht_rehash(hashtable_t *ht, unsigned long newsize) {
+  hashtable_t *new_hashtable = make_hashtable(newsize);
+  bucket_t *node;
+  bucket_t *temp;
+  for(int i = 0; i < ht->size; i++){
+    node = ht->buckets[i];
+    while(node != NULL){
+      temp = node;
+      ht_put(new_hashtable,node->key,node->val);
+      node = node->next;
+      free(temp);
+    }
+  }
+  free(ht->buckets);
+  ht->size = newsize;
+  ht->buckets = new_hashtable->buckets;
+  free(new_hashtable);
 }
