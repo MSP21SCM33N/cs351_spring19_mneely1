@@ -54,7 +54,7 @@ struct job_t jobs[MAXJOBS]; /* The job list */
 
 /* Here are the functions that you will implement */
 void eval(char *cmdline);
-int builtin_cmd(char **argv);
+int builtin_cmd(char **argv);//DONE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 void do_bgfg(char **argv);
 void waitfg(pid_t pid);
 
@@ -268,7 +268,11 @@ void do_bgfg(char **argv)
  */
 void waitfg(pid_t pid)
 {
-  return;
+  struct job_t *job = *getjobpid(jobs, pid);
+  while(job->state == FG){
+    sleep(1)
+  }
+  return 0;
 }
 
 /*****************
