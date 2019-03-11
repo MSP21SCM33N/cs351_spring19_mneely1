@@ -56,7 +56,7 @@ struct job_t jobs[MAXJOBS]; /* The job list */
 void eval(char *cmdline);
 int builtin_cmd(char **argv);//DONE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 void do_bgfg(char **argv);
-void waitfg(pid_t pid);
+void waitfg(pid_t pid);//DONE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 void sigchld_handler(int sig);
 void sigtstp_handler(int sig);
@@ -165,10 +165,17 @@ void eval(char *cmdline)
 {
   /* the following code demonstrates how to use parseline --- you'll 
    * want to replace most of it (at least the print statements). */
-  int i, bg;
+  int bg;
   char *argv[MAXARGS];
+  pid_t pid; // Get the process id
+  struct job_t *job;
 
   bg = parseline(cmdline, argv);
+  if(argv[0] == NULL){
+      return;
+  }
+
+  /*
   if (bg) {
     printf("background job requested\n");
   }
@@ -177,6 +184,7 @@ void eval(char *cmdline)
   }
   return;
 }
+*/
 
 /* 
  * parseline - Parse the command line and build the argv array.
