@@ -175,6 +175,20 @@ void eval(char *cmdline)
       return;
   }
 
+  if (!builtin_cmd(argv)){// if not a built in command, fork and run a child process
+      if ((pid==Fork())== 0){// The pid of a child process is equal to 0
+        if(excve(arg[0],argv, environ)< 0){ // When the excve command returns a value less than 0, it is a failure
+        printf("%s: Command not found. \n",argv[0]); 
+        exit(0); //Immediately exit the program     
+      }  
+  }  if (!bg){
+        waitfg(pid); //The foreground process blocks any addtional programs from running
+    }else{
+        job = getjobpid(jobs,pid);
+        printf(" %d %d %s", job->jid, job->pid, cmdline);
+    }
+
+}
   /*
   if (bg) {
     printf("background job requested\n");
