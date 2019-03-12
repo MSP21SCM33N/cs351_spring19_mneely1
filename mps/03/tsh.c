@@ -169,16 +169,20 @@ void eval(char *cmdline)
   char *argv[MAXARGS];
   pid_t pid; // Get the process id
   struct job_t *job;
-
+  sigset_t mask; // Data structure that determines what signals are affected
   bg = parseline(cmdline, argv);
   if(argv[0] == NULL){
       return;
   }
 
   if (!builtin_cmd(argv)){// if not a built in command, fork and run a child process
+      sigemptyset(&mask);// Initializes the mask so that all signals in the set are excluded
+      sigaddset(&mask, SIGCHLD); // Need to block child signal so the parent process can add the child job
+      sigprocmask(SIG_BLOCK, &mask, NULL);
       if ((pid==Fork())== 0){// The pid of a child process is equal to 0
-        if(excve(arg[0],argv, environ)< 0){ // When the excve command returns a value less than 0, it is a failure
-        printf("%s: Command not found. \n",argv[0]); 
+        sigprocmask(SIG_UNBLOCK, &mask, NULL);
+          if(excve(arg[0],argv, environ)< 0){ // When the excve command returns a value less than 0, it is a failure        printf("%s: Command not found. \n",argv[0]);
+
         exit(0); //Immediately exit the program     
       }  
   }  if (!bg){
