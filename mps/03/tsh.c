@@ -334,6 +334,11 @@ void sigint_handler(int sig)
  */
 void sigtstp_handler(int sig) 
 {
+  pid_t pid;
+  pid = fgpid(jobs);// send the job to the foregroud
+  if(pid){// As long as process id is a foreground job
+    kill(-pid, sig);// The kill function sends the signal to all processes under the specified process id. 
+  }
   return;
 }
 
