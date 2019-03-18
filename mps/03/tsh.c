@@ -313,7 +313,13 @@ void waitfg(pid_t pid)
  *     currently running children to terminate.  
  */
 void sigchld_handler(int sig) 
-{
+{ 
+  pid_t pid;
+  int status;
+  struct job_t *job;
+  while ((pid = waitpid(-1, &status,WNOHANG)>0){
+      
+  }
   return;
 }
 
