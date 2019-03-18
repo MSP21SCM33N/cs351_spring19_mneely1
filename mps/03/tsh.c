@@ -317,8 +317,21 @@ void sigchld_handler(int sig)
   pid_t pid;
   int status;
   struct job_t *job;
-  while ((pid = waitpid(-1, &status,WNOHANG)>0){
-      
+  while ((pid = waitpid(-1, &status,WNOHANG))>0){//Reaps child zombie processes and allows other processes to run
+      if (WIFSIGNALED(status)){//if child process was exited/terminated because of a signal
+           job = getjobpid(jobs,pid);
+           printf("Job [%d] [%d] terminated by %d/n", job->jid, job->pid, WTERMSIG(status));
+           deletejob(jobs,pid);//WTerm determines what signal caused the child process to terminate
+       }
+       else if(WIFSTOPPED(status)){//If a child process was stopped by a signal
+           job = getjobpid(jobs,pid);
+           job->state = ST;
+           printf("Job [%d] [%d] stopped by %d\n", job->jid, job->pid, WSTOPSIG(status));
+       }
+       else if(WIFEXITED(status)){// If child process has exited normally 
+           job = getjobpid(jobs,pid);
+           deletejob(jobs,pid);
+       }
   }
   return;
 }
