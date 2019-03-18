@@ -58,9 +58,9 @@ int builtin_cmd(char **argv);//DONE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 void do_bgfg(char **argv);
 void waitfg(pid_t pid);//DONE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-void sigchld_handler(int sig);
-void sigtstp_handler(int sig);
-void sigint_handler(int sig);
+void sigchld_handler(int sig);//DONE!!!!!!!!!!!!!!!!!!!!!
+void sigtstp_handler(int sig);//DOne!!!!!!!!!!!!!!!!!!!!!
+void sigint_handler(int sig);//DONE!!!!!!!!!!!!!!!!!!!
 
 /* Here are helper routines that we've provided for you */
 int parseline(const char *cmdline, char **argv); 
@@ -286,6 +286,21 @@ int builtin_cmd(char **argv)
  */
 void do_bgfg(char **argv) 
 {
+  struct job_t *job;
+  char *p;
+  int job_id;
+  int num;
+
+  //Case 1: Entered the fg or bg command while entering nothing for your second argument
+  if (argv[1]==NULL){
+      if(strcmp(arg[0],"fg")==0){
+          printf("%s", "fg command requires a process id or a job id");
+      }
+      if(strcmp(arg[0],"bg")==0){
+          printf("%s", "bg command requires a process id or a job id");
+      }
+
+  }
   return;
 }
 
