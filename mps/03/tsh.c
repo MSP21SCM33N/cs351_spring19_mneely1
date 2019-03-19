@@ -179,7 +179,7 @@ void eval(char *cmdline)
       sigemptyset(&mask);// Initializes the mask so that all signals in the set are excluded
       sigaddset(&mask, SIGCHLD); // Need to block child signal so the parent process can add the child job
       sigprocmask(SIG_BLOCK, &mask, NULL);
-      if ((pid==fork())== 0){// The pid of a child process is equal to 0
+      if ((pid=fork())== 0){// The pid of a child process is equal to 0
         sigprocmask(SIG_UNBLOCK, &mask, NULL);
         setpgid(0,0);// Sets all child processes ids to be 0 as defined
           if(execve(argv[0],argv, environ)< 0){ // When the excve command returns a value less than 0, it is a failure        printf("%s: Command not found. \n",argv[0]);
