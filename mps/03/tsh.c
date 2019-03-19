@@ -323,9 +323,9 @@ void do_bgfg(char **argv)
       else if(strcmp("fg",argv[0])==0){
          if ((p=strstr(argv[1],"%"))!= NULL){
              p++;
-             jobid = atoi(p);
+             job_id = atoi(p);
          }
-         job = getjobjid(jobs,jid);
+         job = getjobjid(jobs,job_id);
          job->state = FG;
          kill(-1*(job->pid),SIGCONT);
          waitfg(job->pid); // Wait until the process gets out of the foreground
