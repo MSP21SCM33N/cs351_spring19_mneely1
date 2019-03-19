@@ -181,17 +181,24 @@ void eval(char *cmdline)
       sigprocmask(SIG_BLOCK, &mask, NULL);
       if ((pid==fork())== 0){// The pid of a child process is equal to 0
         sigprocmask(SIG_UNBLOCK, &mask, NULL);
+        setpgid(0,0);// Sets all child processes ids to be 0 as defined
           if(execve(argv[0],argv, environ)< 0){ // When the excve command returns a value less than 0, it is a failure        printf("%s: Command not found. \n",argv[0]);
-
-        exit(1); //Immediately exit the program     
-      }  
-  }  if (!bg){
+            printf("%s: Command not found\n", argv[0]);
+            exit(1); //Immediately exit the program     
+      }
+     
+     
+    } addjob(jobs,pid, bg ? BG : FG, cmdLine);
+      sigprocmask(SIG_UNBLOCK, &mask, NULL);
+      if (!bg){
         waitfg(pid); //The foreground process blocks any addtional programs from running
     }else{
         job = getjobpid(jobs,pid);
         printf(" %d %d %s", job->jid, job->pid, cmdline);
     }
 
+  }
+  return;
 }
   /*
   if (bg) {
