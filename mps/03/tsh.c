@@ -333,7 +333,7 @@ void do_bgfg(char **argv)
     }else{
         printf("%s: %s", argv[1], "No such job\n");
      }
-
+  }
   return;
 }
 
