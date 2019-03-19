@@ -293,10 +293,10 @@ void do_bgfg(char **argv)
 
   //Case 1: Entered the fg or bg command while entering nothing for your second argument
   if (argv[1]==NULL){
-      if(strcmp(arg[0],"fg")==0){
+      if(strcmp(argv[0],"fg")==0){
           printf("%s", "fg command requires a process id or a job id");
       }
-      if(strcmp(arg[0],"bg")==0){
+      if(strcmp(argv[0],"bg")==0){
           printf("%s", "bg command requires a process id or a job id");
       }
 
