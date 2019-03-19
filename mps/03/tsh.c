@@ -188,7 +188,7 @@ void eval(char *cmdline)
       }
      
      
-    } addjob(jobs,pid, bg ? BG : FG, cmdLine);
+    } addjob(jobs,pid, bg ? BG : FG, cmdline);
       sigprocmask(SIG_UNBLOCK, &mask, NULL);
       if (!bg){
         waitfg(pid); //The foreground process blocks any addtional programs from running
