@@ -313,10 +313,10 @@ void do_bgfg(char **argv)
           if(strcmp("bg", argv[0])==0){
               if((p = strstr(argv[1],"%"))!=NULL){
                   p++;
-                  jobid = atoi(p);
+                  job_id = atoi(p);
               }
-              job = getjobjid(jobs,jid);
-              printf("[%d] (%d) %s", job->jid, job->pid, cmdline);
+              job = getjobjid(jobs,job_id);
+              printf("[%d] (%d) %s", job->jid, job->pid, job->cmdline);
               job->state = BG;
               kill(-1*(job->pid), SIGCONT);
           }
