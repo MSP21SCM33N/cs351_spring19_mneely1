@@ -307,7 +307,33 @@ void do_bgfg(char **argv)
           printf("%s", "bg command requires a process id or a job id");
       }
 
-  }
+      //Case 2: Entered the fg or bg command while also entering the job id
+  }else if((strstr(argv[1], "%"))!= NULL){//returns pointer to the first occurrence of the percent sign
+      if(getjobjid(jobs, atoi(&(argv[1][1]))) != NULL){
+          if(strcmp("bg", argv[0])==0){
+              if((p = strstr(argv[1],"%"))!=NULL){
+                  p++;
+                  jobid = atoi(p);
+              }
+              job = getjobjid(jobs,jid);
+              printf("[%d] (%d) %s", job->jid, job->pid, cmdline);
+              job->state = BG;
+              kill(-1*(job->pid), SIGCONT);
+          }
+      else if(strcmp("fg",argv[0])==0){
+         if ((p=strstr(argv[1],"%"))!= NULL){
+             p++;
+             jobid = atoi(p);
+         }
+         job = getjobjid(jobs,jid);
+         job->state = FG;
+         kill(-1*(job->pid),SIGCONT);
+         waitfg(job->pid); // Wait until the process gets out of the foreground
+      }
+    }else{
+        printf("%s: %s", argv[1], "No such job\n");
+     }
+
   return;
 }
 
