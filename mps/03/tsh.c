@@ -271,7 +271,7 @@ int builtin_cmd(char **argv)
       exit(0);
   }
   if (strcmp("jobs",argv[0]) == 0){
-      listjobs(argv);
+      listjobs(jobs);
       return 1;
   }
   if (strcmp("bg",argv[0]) == 0 || strcmp("fg",argv[0]) == 0){
