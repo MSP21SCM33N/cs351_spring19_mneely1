@@ -333,8 +333,24 @@ void do_bgfg(char **argv)
     }else{
         printf("%s: %s", argv[1], "No such job\n");
      }
-  }
-  return;
+  }else{
+       char *ptr = argv[1];
+       num = strtol(ptr, &ptr, 10);
+       if (*ptr == '\0'){
+           if ((getjobpid(jobs,num) == NULL)){
+               printf("(%s): %s", argv[1], "No such process\n");
+           }
+       }else{
+           if (strcmp(argv[0], "bg")==0){
+               printf("%s", "bg: argument must be a PID or %jobid\n");
+           }
+           if (strcmp(argv[0], "fg") == 0){
+               printf("%s", "fg: argument must be a PID or %jobid\n");
+           }
+       }       
+   }
+  
+ 
 }
 
 /* 
