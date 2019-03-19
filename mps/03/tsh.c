@@ -194,7 +194,7 @@ void eval(char *cmdline)
         waitfg(pid); //The foreground process blocks any addtional programs from running
     }else{
         job = getjobpid(jobs,pid);
-        printf(" %d %d %s", job->jid, job->pid, cmdline);
+        printf("[%d] (%d) %s", job->jid, job->pid, cmdline);
     }
 
   }
