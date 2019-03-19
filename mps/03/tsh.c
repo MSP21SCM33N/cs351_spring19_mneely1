@@ -181,7 +181,7 @@ void eval(char *cmdline)
       sigprocmask(SIG_BLOCK, &mask, NULL);
       if ((pid==fork())== 0){// The pid of a child process is equal to 0
         sigprocmask(SIG_UNBLOCK, &mask, NULL);
-          if(excve(arg[0],argv, environ)< 0){ // When the excve command returns a value less than 0, it is a failure        printf("%s: Command not found. \n",argv[0]);
+          if(execv(arg[0],argv, environ)< 0){ // When the excve command returns a value less than 0, it is a failure        printf("%s: Command not found. \n",argv[0]);
 
         exit(1); //Immediately exit the program     
       }  
