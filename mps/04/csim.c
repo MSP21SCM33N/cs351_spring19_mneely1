@@ -28,8 +28,38 @@ typedef struct{
 
 }cache;
 
-int main()
+int main(int argc, char *argv[] )
 {
+    int E = 0;
+    int b = 0;
+    int s = 0;
+    char *t; 
+    int misses = 0
+    int hits = 0;
+    int evicts = 0
+    int size; 
+    char command
+    unsigned long long int address; // Initializes the data storage in the cache
+    char parse_cmdline;
+    extern char *optarg; // Needed for the getopt function
+
+    while((parse_cmdLine = getopt(argc, argv, "hvs:E:b:t:"))!= -1) {// Parses cmd Line arguments
+        switch(parse_cmdLine){
+            case 's':
+                s = atoi(optarg); // if option has a value, it points to the extern optarg, so you have to call the atoi() to convert the string to an int value
+                break;
+            case 'E':
+                E = atoi(optarg);
+            case 'b':
+                b = atoi(optarg);
+                break;
+            case 't':
+                t = optarg;
+                break;  
+        }
+    }
+
+
     printSummary(0, 0, 0);
     return 0;
 }
