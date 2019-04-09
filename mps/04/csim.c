@@ -59,7 +59,11 @@ int main(int argc, char *argv[] )
         }
     }
 
-
+    File *trace; // check to see if the tracefile in our command line exists
+    if (( trace = fopen(t, "r")) == NULL){ // use the f open command and r to open and read the file. If it is equal to null, the tracefile isn't available to open
+        printf("Could not open %s\n",t);
+        exit(1);
+    }
     printSummary(0, 0, 0);
     return 0;
 }
