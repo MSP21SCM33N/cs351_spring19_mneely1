@@ -65,15 +65,19 @@ int main(int argc, char *argv[] )
         exit(1);
     }
 
-    cache c; //Initialize the cache
-    cache_set set;
+    cache c; //Initialize the cache structure itself
+    cache_set set; // 
     cache_line line;
 
     cache.numbsets = b;
     cache.numb_lines = E;
     cache.block_size = s;
 
-    c.sets = (cache_set *) malloc(sizeof(cache_set)*(pow(2.0,s)) );
+    c.sets = (cache_set *) malloc(sizeof(cache_set)*(pow(2.0,s)) ); // Initialize the cache sets and allowcate memory for it. 
+    for (int i = 0; i < pow(2,s), i++){
+        set.lines = (cache_line *) malloc(sizeof(cache_line)*(E));
+        c.sets[i] = set; 
+    }
     printSummary(0, 0, 0);
     return 0;
 }
