@@ -64,6 +64,16 @@ int main(int argc, char *argv[] )
         printf("Could not open %s\n",t);
         exit(1);
     }
+
+    cache c; //Initialize the cache
+    cache_set set;
+    cache_line line;
+
+    cache.numbsets = b;
+    cache.numb_lines = E;
+    cache.block_size = s;
+
+    c.sets = (cache_set *) malloc(sizeof(cache_set)*(pow(2.0,s)) );
     printSummary(0, 0, 0);
     return 0;
 }
