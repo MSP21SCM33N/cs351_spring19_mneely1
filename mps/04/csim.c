@@ -104,3 +104,25 @@ int main(int argc, char *argv[] )
     printSummary(hits, misses, evicts);
     return 0;
 }
+
+eval_cache( cache c, int b, unsigned long long int address, int *misses, int *hits, int * evicts){
+    int cache_size = (64 -(c.numb_sets+c.block_size));
+    mem_addr_t c_tag = address >> (c.numb_sets + c.block_size);// tag distinguishes between the different memory location. Dividing the address by 2^(numb_sets + block size) gives us the entire size of the tag block
+    unsigned long long int temp = address << (cache_size); // Temp variable to store the 2^cache size times the address 
+    unsigned long long int indexSet = temp >> (cache_size + c.block_size); // Index set = 2^(cachesize + block size)
+    int numb_hits = *hits;
+    int full = 1; 
+    cache_set array_set = c.sets[indexSet];
+    for (int i = 0; i < c.numb_lines; i++){// Evaluate the cache lines to see if there is a hit
+        cache_line = array_set.lines[i];
+        if (line.valid){
+            if (line.tag = c_tag){
+                *hits++;
+                line.line_row_cnt++;
+                array_set.lines[i]=line;
+            }
+        }else if(!(line.valid) && (full)){
+            full = 0;
+        }
+    }
+}
