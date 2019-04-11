@@ -84,6 +84,13 @@ int main(int argc, char *argv[] )
            set.lines[j] = line;
        } 
     }
+
+    while (fscanf(trace, "%c %llx, %d", &command, &address, &size) == 3){//Set the buffer to 3 to evaluate the commands in the tracefile
+        switch(command){
+            
+        }    
+    
+    }
     printSummary(0, 0, 0);
     return 0;
 }
