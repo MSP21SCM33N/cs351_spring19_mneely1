@@ -145,7 +145,16 @@ int lest_freq_used(cache_set set, int numb_lines, *line_used){
 
     for (int i = 0; i < numb_lines; i++){
         line = set.lines[i];
-
+        if (min_used > line.line_row_cnt){// If the min is used at this line
+            index_min_used = i;
+            min_used = line.line_row_cnt;
+        }
+        if (max_used < line.line_row_count){
+            max_used = line.line_row_cnt;
+        }
     }
+    used_lines[0] = min_used;
+    used_lines[1] = max_used;
+    return index_min_used; 
 
 }
