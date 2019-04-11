@@ -100,6 +100,7 @@ int main(int argc, char *argv[] )
         }    
     
     }
-    printSummary(0, 0, 0);
+    fclose(trace);
+    printSummary(hits, misses, evicts);
     return 0;
 }
