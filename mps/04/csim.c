@@ -125,4 +125,27 @@ eval_cache( cache c, int b, unsigned long long int address, int *misses, int *hi
             full = 0;
         }
     }
+
+    if (numb_hits == *hits){//Something in the cache is not found
+        *misses++;
+    }else{
+        return;
+    }
+    
+    int *ret = (int *) malloc(sizeof(int)*2); // Allocated memory for our return pointer which will be used for our other function to get the less frequently used line in our cache
+    int index = least_freq_used(array_set, c.numb_lines, ret);
+
+
+}
+int lest_freq_used(cache_set set, int numb_lines, *line_used){
+    int min_used= set.lines[0].line_row_cnt;
+    int max_used = set.lines[0].line_row_cnt; 
+    int index_min_used = 0;
+    cache_line line;
+
+    for (int i = 0; i < numb_lines; i++){
+        line = set.lines[i];
+
+    }
+
 }
