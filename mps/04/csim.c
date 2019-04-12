@@ -27,7 +27,8 @@ typedef struct{
     cache_set * sets; // Points to an array of sets in a cache set
 
 }cache;
-
+void eval_cache(cache c,int b, unsigned long long int address, int *misses, int *hits, int *evicts);
+int least_freq_used(cache_set set, int numb_lines, int *lines_used);
 int main(int argc, char *argv[] )
 {
     int E = 0;
