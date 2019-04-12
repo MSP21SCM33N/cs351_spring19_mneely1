@@ -51,6 +51,7 @@ int main(int argc, char *argv[] )
                 break;
             case 'E':
                 E = atoi(optarg);
+                break;
             case 'b':
                 b = atoi(optarg);
                 break;
@@ -60,7 +61,7 @@ int main(int argc, char *argv[] )
         }
     }
 
-    File *trace; // check to see if the tracefile in our command line exists
+    FILE *trace; // check to see if the tracefile in our command line exists
     if (( trace = fopen(t, "r")) == NULL){ // use the f open command and r to open and read the file. If it is equal to null, the tracefile isn't available to open
         printf("Could not open %s\n",t);
         exit(1);
@@ -70,7 +71,7 @@ int main(int argc, char *argv[] )
     cache_set set; // 
     cache_line line;
 
-    c.numbsets = b;
+    c.numb_sets = b;
     c.numb_lines = E;
     c.block_size = s;
 
