@@ -152,7 +152,7 @@ void eval_cache( cache c, int b, unsigned long long int address, int *misses, in
     }
 
 }
-int least_freq_used(cache_set set, int numb_lines, *lines_used){
+int least_freq_used(cache_set set, int numb_lines, int *lines_used){
     int min_used= set.lines[0].line_row_cnt;
     int max_used = set.lines[0].line_row_cnt; 
     int index_min_used = 0;
