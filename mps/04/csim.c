@@ -44,7 +44,7 @@ int main(int argc, char *argv[] )
     char parse_cmdline;
     extern char *optarg; // Needed for the getopt function
 
-    while((parse_cmdLine = getopt(argc, argv, "hvs:E:b:t:"))!= -1) {// Parses cmd Line arguments
+    while((parse_cmdline = getopt(argc, argv, "hvs:E:b:t:"))!= -1) {// Parses cmd Line arguments
         switch(parse_cmdLine){
             case 's':
                 s = atoi(optarg); // if option has a value, it points to the extern optarg, so you have to call the atoi() to convert the string to an int value
@@ -103,7 +103,7 @@ int main(int argc, char *argv[] )
     }
     fclose(trace);
     printSummary(hits, misses, evicts);
-    return 0;
+        return 0;
 }
 
 void eval_cache( cache c, int b, unsigned long long int address, int *misses, int *hits, int * evicts){
