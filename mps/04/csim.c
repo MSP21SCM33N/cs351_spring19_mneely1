@@ -35,11 +35,11 @@ int main(int argc, char *argv[] )
     int b = 0;
     int s = 0;
     char *t; 
-    int misses = 0
+    int misses = 0;
     int hits = 0;
-    int evicts = 0
+    int evicts = 0;
     int size; 
-    char command
+    char command;
     unsigned long long int address; // Initializes the data storage in the cache
     char parse_cmdline;
     extern char *optarg; // Needed for the getopt function
