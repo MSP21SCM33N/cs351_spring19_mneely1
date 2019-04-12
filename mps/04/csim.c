@@ -115,9 +115,9 @@ void eval_cache( cache c, int b, unsigned long long int address, int *misses, in
     int full = 1; 
     cache_set array_set = c.sets[indexSet];
     for (int i = 0; i < c.numb_lines; i++){// Evaluate the cache lines to see if there is a hit
-        cache_line = array_set.lines[i];
+        cache_line line  = array_set.lines[i];
         if (line.valid){
-            if (line.tag = c_tag){
+            if (line.tag == c_tag){
                 *hits = *hits + 1;
                 line.line_row_cnt++;
                 array_set.lines[i]=line;
@@ -152,7 +152,7 @@ void eval_cache( cache c, int b, unsigned long long int address, int *misses, in
     }
 
 }
-int least_freq_used(cache_set set, int numb_lines, *line_used){
+int least_freq_used(cache_set set, int numb_lines, *lines_used){
     int min_used= set.lines[0].line_row_cnt;
     int max_used = set.lines[0].line_row_cnt; 
     int index_min_used = 0;
