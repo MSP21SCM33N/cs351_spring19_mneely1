@@ -70,9 +70,9 @@ int main(int argc, char *argv[] )
     cache_set set; // 
     cache_line line;
 
-    cache.numbsets = b;
-    cache.numb_lines = E;
-    cache.block_size = s;
+    c.numbsets = b;
+    c.numb_lines = E;
+    c.block_size = s;
 
     c.sets = (cache_set *) malloc(sizeof(cache_set)*(pow(2.0,s)) ); // Initialize the cache sets and allowcate memory for it. 
     for (int i = 0; i < pow(2,s); i++){
