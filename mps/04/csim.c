@@ -45,7 +45,7 @@ int main(int argc, char *argv[] )
     extern char *optarg; // Needed for the getopt function
 
     while((parse_cmdline = getopt(argc, argv, "hvs:E:b:t:"))!= -1) {// Parses cmd Line arguments
-        switch(parse_cmdLine){
+        switch(parse_cmdline){
             case 's':
                 s = atoi(optarg); // if option has a value, it points to the extern optarg, so you have to call the atoi() to convert the string to an int value
                 break;
