@@ -75,7 +75,7 @@ int main(int argc, char *argv[] )
     cache.block_size = s;
 
     c.sets = (cache_set *) malloc(sizeof(cache_set)*(pow(2.0,s)) ); // Initialize the cache sets and allowcate memory for it. 
-    for (int i = 0; i < pow(2,s), i++){
+    for (int i = 0; i < pow(2,s); i++){
         set.lines = (cache_line *) malloc(sizeof(cache_line)*(E));
         c.sets[i] = set;
        for (int j = 0; j < E; i++){
