@@ -117,7 +117,7 @@ void eval_cache( cache c, int b, unsigned long long int address, int *misses, in
         cache_line = array_set.lines[i];
         if (line.valid){
             if (line.tag = c_tag){
-                *hits++;
+                *hits = *hits + 1;
                 line.line_row_cnt++;
                 array_set.lines[i]=line;
             }
@@ -127,7 +127,7 @@ void eval_cache( cache c, int b, unsigned long long int address, int *misses, in
     }
 
     if (numb_hits == *hits){//Something in the cache is not found
-        *misses++;
+        *misses = *misses + 1;
     }else{
         return;
     }
@@ -136,7 +136,7 @@ void eval_cache( cache c, int b, unsigned long long int address, int *misses, in
     int index = least_freq_used(array_set, c.numb_lines, lines_used);
 
     if (full){// When full, an evict has to be done
-        *evicts++;
+        *evicts = *evicts + 1;
         array_set.lines[index].tag = c_tag;
         array_set.lines[index].line_row_cnt = lines_used[1] + 1;
     }else{//The case of an empty line
