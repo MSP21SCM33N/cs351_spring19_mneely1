@@ -105,7 +105,7 @@ int main(int argc, char *argv[] )
     return 0;
 }
 
-eval_cache( cache c, int b, unsigned long long int address, int *misses, int *hits, int * evicts){
+void eval_cache( cache c, int b, unsigned long long int address, int *misses, int *hits, int * evicts){
     int cache_size = (64 -(c.numb_sets+c.block_size));
     mem_addr_t c_tag = address >> (c.numb_sets + c.block_size);// tag distinguishes between the different memory location. Dividing the address by 2^(numb_sets + block size) gives us the entire size of the tag block
     unsigned long long int temp = address << (cache_size); // Temp variable to store the 2^cache size times the address 
