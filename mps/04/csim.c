@@ -164,12 +164,12 @@ int least_freq_used(cache_set set, int numb_lines, int *lines_used){
             index_min_used = i;
             min_used = line.line_row_cnt;
         }
-        if (max_used < line.line_row_count){
+        if (max_used < line.line_row_cnt){
             max_used = line.line_row_cnt;
         }
     }
-    used_lines[0] = min_used;
-    used_lines[1] = max_used;
+    lines_used[0] = min_used;
+    lines_used[1] = max_used;
     return index_min_used; 
 
 }
