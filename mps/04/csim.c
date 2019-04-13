@@ -28,26 +28,32 @@ typedef struct{
 
 }cache;
 void eval_cache(cache c,int b, unsigned long long int address, int *misses, int *hits, int *evicts);
-int least_freq_used(cache_set set, int numb_lines, int *lines_used);
+int least_freq_used(cache_set set, int numb_lines, int *lines_used); 
+ 
 int main(int argc, char *argv[] )
 {
+    char *trace;
     int E = 0;
     int b = 0;
     int s = 0;
-    char *t; 
+    //int h = 0;
+    
+   // char *t = 0; 
     int misses = 0;
     int hits = 0;
     int evicts = 0;
-    int size; 
+    int size;
+    
     char command;
     unsigned long long int address; // Initializes the data storage in the cache
     char parse_cmdline;
-    extern char *optarg; // Needed for the getopt function
-
-    while((parse_cmdline = getopt(argc, argv, "hvs:E:b:t:"))!= -1) {// Parses cmd Line arguments
+    extern char * optarg;
+   // char *optarg; // Needed for the getopt function
+   // parse_cmdline = getopt(argc, argv, "s:E:b:t:hv");
+    while((parse_cmdline = getopt(argc,argv, "hvs:E:b:t:")) != -1){
         switch(parse_cmdline){
             case 's':
-                s = atoi(optarg); // if option has a value, it points to the extern optarg, so you have to call the atoi() to convert the string to an int value
+                s = atoi(optarg);
                 break;
             case 'E':
                 E = atoi(optarg);
@@ -56,14 +62,15 @@ int main(int argc, char *argv[] )
                 b = atoi(optarg);
                 break;
             case 't':
-                t = optarg;
+                trace = optarg;
                 break;  
         }
     }
 
-    FILE *trace; // check to see if the tracefile in our command line exists
-    if (( trace = fopen(t, "r")) == NULL){ // use the f open command and r to open and read the file. If it is equal to null, the tracefile isn't available to open
-        printf("Could not open %s\n",t);
+    FILE *file;
+    file = fopen(trace, "r"); // check to see if the tracefile in our command line exists
+    if (file == NULL){ // use the f open command and r to open and read the file. If it is equal to null, the tracefile isn't available to open
+        printf("Could not open %s\n",trace);
         exit(1);
     }
 
@@ -71,15 +78,15 @@ int main(int argc, char *argv[] )
     cache_set set; // 
     cache_line line;
 
-    c.numb_sets = b;
+    c.numb_sets = s;
     c.numb_lines = E;
-    c.block_size = s;
+    c.block_size = b;
 
     c.sets = (cache_set *) malloc(sizeof(cache_set)*(pow(2.0,s)) ); // Initialize the cache sets and allowcate memory for it. 
-    for (int i = 0; i < pow(2,s); i++){
+    for (int i = 0; i < pow(2.0,s); i++){
         set.lines = (cache_line *) malloc(sizeof(cache_line)*(E));
         c.sets[i] = set;
-       for (int j = 0; j < E; i++){
+       for (int j = 0; j < E; j++){
            line.valid = 0;
            line.tag = 0;
            line.line_row_cnt = 0;
@@ -87,7 +94,7 @@ int main(int argc, char *argv[] )
        } 
     }
 
-    while (fscanf(trace, "%c %llx, %d", &command, &address, &size) == 3){//Set the buffer to 3 to evaluate the commands in the tracefile
+    while (fscanf(file, " %c %llx,%d", &command, &address, &size) != 3){//Set the buffer to 3 to evaluate the commands in the tracefile
         switch(command){
             case 'L':
                 eval_cache(c,b,address, &misses, &hits, &evicts);
@@ -104,9 +111,9 @@ int main(int argc, char *argv[] )
         }    
     
     }
-    fclose(trace);
+    fclose(file);
     printSummary(hits, misses, evicts);
-    return 0;
+        return 0;
 }
 
 void eval_cache( cache c, int b, unsigned long long int address, int *misses, int *hits, int * evicts){
