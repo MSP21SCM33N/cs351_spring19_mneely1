@@ -22,6 +22,21 @@ int is_transpose(int M, int N, int A[N][M], int B[M][N]);
 char transpose_submit_desc[] = "Transpose submission";
 void transpose_submit(int M, int N, int A[N][M], int B[M][N])
 {
+    int block_size;
+    int row, column;
+    int temp;
+    int d;
+    int r; 
+
+    if (N == 32 && M == 32){// Size of the matrix is 32x32
+    
+    }
+    else if (M == 64 && N == 64){
+    
+    }
+    else if (M == 61 && N == 67){
+    
+    }
 }
 
 /* 

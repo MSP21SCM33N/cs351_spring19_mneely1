@@ -94,7 +94,7 @@ int main(int argc, char *argv[] )
        } 
     }
 
-    while (fscanf(file, " %c %llx,%d", &command, &address, &size) != 3){//Set the buffer to 3 to evaluate the commands in the tracefile
+    while (fscanf(file, " %c %llx,%d", &command, &address, &size) == 3){//Set the buffer to 3 to evaluate the commands in the tracefile
         switch(command){
             case 'L':
                 eval_cache(c,b,address, &misses, &hits, &evicts);
