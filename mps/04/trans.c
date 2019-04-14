@@ -25,13 +25,33 @@ void transpose_submit(int M, int N, int A[N][M], int B[M][N])
     int block_size;
     int row, column;
     int temp;
-    int d;
-    int r; 
+    int flag; // indicates if a diagonal element has been used
+    int r;
 
     if (N == 32 && M == 32){// Size of the matrix is 32x32
-    
+        block_size = 8; // Blocking with 8 x8 matrix
+        for (row = 0; row < N; row += block_size){
+            for (column = 0; column < M; column += block_size){
+                for (int i = row; i < row + block_size; i++){
+                    for (int j = column; j < column +block_size; j++){
+                        if (i != j){// Tests if it is a diagnal elemnt
+                            B[j][i] = A[i][j];
+                        }else{
+                            temp = A[i][j];
+                            r = i;
+                            flag = 1;
+                        }
+                    }
+                    if (flag ==1){
+                        B[r][r] = temp;
+                        flag = 0;
+                    }
+                }
+            }
+        }
     }
     else if (M == 64 && N == 64){
+
     
     }
     else if (M == 61 && N == 67){
