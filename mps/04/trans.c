@@ -74,11 +74,12 @@ void transpose_submit(int M, int N, int A[N][M], int B[M][N])
     
     }
     else if (M == 61 && N == 67){
-        block_size = 20; 
-        for (row = 0; row < N; row += block_size){
-            for (column = 0; column < M; column +=block_size){
-                for(int i = row; i < row + block_size; i++){
-                    for (int j = column; j < column + block_size; j++){
+       int  sub_row = 21;
+       int sub_col = 2;
+        for (row = 0; row < N; row += sub_row){
+            for (column = 0; column < M; column +=sub_col){
+                for(int i = row; i < row + sub_row; i++){
+                    for (int j = column; j < column + sub_col; j++){
                         if (i > 66 || j > 60){
                             continue;
                         }else{
