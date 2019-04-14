@@ -51,7 +51,26 @@ void transpose_submit(int M, int N, int A[N][M], int B[M][N])
         }
     }
     else if (M == 64 && N == 64){
-
+        block_size = 4; // Blocking with size 4 x 4
+          for (row = 0; row < N; row += block_size){
+              for (column = 0; column < M; column += block_size){
+                  for (int i = row; i < row + block_size; i++){
+                      for (int j = column; j < column +block_size; j++){
+                          if (i != j){// Tests if it is a diagnal elemnt
+                              B[j][i] = A[i][j];
+                          }else{
+                              temp = A[i][j];
+                              r = i;
+                              flag = 1;
+                          }
+                      }
+                      if (flag ==1){
+                          B[r][r] = temp;
+                          flag = 0;
+                      }
+                  }
+             }
+          }
     
     }
     else if (M == 61 && N == 67){
