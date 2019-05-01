@@ -19,6 +19,19 @@
 
 #define SIZE_T_SIZE (ALIGN(sizeof(size_t)))
 
+typedef struct header blockHDR;
+typedef struct footer blockFTR;
+    
+struct header{
+    size_t size;
+    blockHdr *next_pnt;
+    blockHdr *prior_p; // Initializes a doubly linked list
+};
+
+struct footer{
+    blockHdr *head;
+};
+
 /* 
  * mm_init - initialize the malloc package.
  */
