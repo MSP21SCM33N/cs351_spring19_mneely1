@@ -15,7 +15,8 @@
 
 /* rounds up to the nearest multiple of ALIGNMENT */
 #define ALIGN(size) (((size) + (ALIGNMENT-1)) & ~0x7)
-
+#define BLK_HDR_SIZE ALIGN(sizeof(blockHDR))
+#define BLK_FTR_SIZE ALIGHN(sizeof(blockFTR))
 
 #define SIZE_T_SIZE (ALIGN(sizeof(size_t)))
 
@@ -46,8 +47,21 @@ int mm_init(void)
  */
 void *mm_malloc(size_t size)
 {
-  int newsize = ALIGN(size + SIZE_T_SIZE);
-  void *p = mem_sbrk(newsize);
+  int newsize = ALIGN(BLK_HDR_SIZE +size + BLK_FTR_SIZE);
+  blockHDR *bg_pnt = first_fit(newsize); // Requesting k block bytes to allocate; need to find a fit in order to find a free block to hold the allocated block
+  if (bg_pnt === NULL){
+    bg_pnt = mem_sbrk(newsize);// requesting more memory for heap
+    if ((long)bg == -1){
+        return NULL; // Essentially saying that there was an error with our break
+    }else{
+        fp = (blockFTR *)((char*_)bp + newsize - BLK_FTR_SIZE);
+        bg_pnt->next_pnt = bg_pnt->prioer_p = bg_pnt;
+        bg_pnt->size = newsize |1;
+        fp->size = newsize |1;
+        
+    }
+  }
+  
   if ((long)p == -1)
     return NULL;
   else {
