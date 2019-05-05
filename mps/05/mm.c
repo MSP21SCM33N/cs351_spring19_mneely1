@@ -49,6 +49,7 @@ void *mm_malloc(size_t size)
 {
   int newsize = ALIGN(BLK_HDR_SIZE +size + BLK_FTR_SIZE);
   blockHDR *bg_pnt = first_fit(newsize); // Requesting k block bytes to allocate; need to find a fit in order to find a free block to hold the allocated block
+  blockFTR *fp_pnt;
   if (bg_pnt === NULL){
     bg_pnt = mem_sbrk(newsize);// requesting more memory for heap
     if ((long)bg == -1){
@@ -60,16 +61,14 @@ void *mm_malloc(size_t size)
         fp->size = newsize |1;
         
     }
+  }else{
+    fp_pnt = (blockFTR*)((char*)(bg_pnt) + (bg_pnt->size & ~1) -BLK_FTR_SIZE);
+    bg_pnt->size |= 1;
+    fp_pnt->size |= 1; 
   }
-  
-  if ((long)p == -1)
-    return NULL;
-  else {
-    *(size_t *)p = size;
-    return (void *)((char *)p + SIZE_T_SIZE);
-  }
+  return (char *)bg_pnt + BLK_HDR_SIZE;
 }
-
+//does this work
 /*
  * mm_free - Freeing a block does nothing.
  */
