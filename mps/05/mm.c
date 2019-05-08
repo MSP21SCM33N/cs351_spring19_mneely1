@@ -118,6 +118,52 @@ void *first_fit(size_t size){
 }
 void mm_free(void *ptr)
 {
+ blockHDR *bp,*final_hd,*next_hd;
+ blockFTR *fp,*prior_ft,*final_ft;
+ bp = ptr-BLK_HDR_SIZE;
+ bp->size &= ~1;
+ fp = (blockFTR*)((char *)bp + bp->size - BLK_FTR_SIZE);
+ fp->size = bp->size;
+ final_hd = bp;
+ final_ft = fp;
+ int flag = 0;
+ if((blockHdr*)((char*)bp - BLK_HDR_SIZE) > &head[NUM_SIZE_CLASSES-1]){
+   prior_ft = (blockFTR*)((char*)bp - BLK_FTR_SIZE);
+   if(prior_ft->size == (prior_ft->size & ~1)){
+     flag = 1;
+     final_hd = (blockHDR *)((char*)bp - prior_ft->size);
+     final_hd->size = prior_ft->size + bp->size;
+     final_ft->size = final_hd->size;
+     final_hd->next_p->prior_p = final_hd->prior_p;  //get prev block out of list
+     final_hd->prior_p->next_p = final_hd->next_p;   //get prev block out of list
+     final_hd->next_p = final_hd->prior_p = final_hd;
+   }
+ }
+ if((void *)((char*)fp + BLK_FTR_SIZE) < mem_sbrk(0)){
+    next_hd = (blockHDR *)((char*)fp + BLK_FTR_SIZE);
+    if(next_hd->size == (next_hd->size & ~1)){
+      final_ft = (blockFTR *)((char*)next_hd + next_hd->size - BLK_FTR_SIZE);
+      if(flag)
+        inal_ft->size = prior_ft->size + bp->size + next_hd->size;
+      else
+        final_ft->size = fp->size + next_hd->size;
+      final_hd->size = final_ft->size;
+      next_hd->next_p->prior_p = next_hd->prior_p;   //get next block out of list
+      next_hd->prior_p->next_p = next_hd->next_p;    //get next block out of list
+      next_hd->prior_p = next_hd->next_p = next_hd;
+    }
+  }
+  
+ size_t fullsize = final_hd->size;
+ for (int i = NUM_SIZE_CLASSES-1; i > 0; i--){
+     if(min_class_size[i] <= fullsize){
+         final_hd->next_pnt = head[i].next_pnt;
+         final_hd->prior_p = &head[i];
+         head[i].next_pnt == final_hd;
+         final_hd->next_pnt->prior_p = final_hd;
+         break;
+     } 
+   }
 }
 
 /*
