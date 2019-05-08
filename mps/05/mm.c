@@ -35,7 +35,6 @@ struct header{
 };
 
 struct footer{
-    blockHDR *head;
     size_t size;
 };
 
@@ -48,13 +47,12 @@ void print_heap();
 void split(blockHDR *bp, size_t needed);
 int mm_init(void)
 {
-  blockHDR *pnt = mem_sbrk(ALIGN(BLK_HDR_SIZE+BLK_FTR_SIZE));
-  pnt->size = BLK_HDR_SIZE +BLK_FTR_SIZE;
-  pnt->next_pnt = pnt;
-  pnt->prior_p = pnt;
-
-  blockFTR *fpnt = (blockFTR*)((char*)mem_heap_hi()-BLK_FTR_SIZE+1);
-  fpnt->head = pnt;
+  head = mem_sbrk(NUM_SIZE_CLASSES * BLK_HDR_SIZE);
+  for (int i = 0; i <NUM_SIZE_CLASSES; i++){
+    head[i].size = BLK_HDR_SIZE;
+    head[i].next_pnt = &head[i];
+    head[i].prior_p = &head[i];
+  }
 
   return 0;
 
