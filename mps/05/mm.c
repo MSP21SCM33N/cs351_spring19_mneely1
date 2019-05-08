@@ -50,6 +50,15 @@ int mm_init(void)
 
 }
 
+void print_heap(){
+    blockHDR *bp = mem_heap_lo();
+    while (bp < (blockHDR *)mem_heap_hi()){
+        printf("%s block at %p, size%d\n"(bp->size&1)?"allocated":"free", 
+        bp, (int)(bp->size&~1));
+        bp = (blockHDR *)((char*)bp + (bp->size & ~1));
+    }
+}
+
 /* 
  * mm_malloc - Allocate a block by incrementing the brk pointer.
  *     Always allocate a block whose size is a multiple of the alignment.
@@ -97,12 +106,12 @@ void *first_fit(size_t size){
     while(bp != &head[NUM_SIZE_CLASSES-1]){
         if(bp->size >= size){
             bp->next_p->prior_p = bp->prior_p;
-            bp->prior_p->next_p = bp->next_p;
-            bp->next_p = bp->prior_p = bp;
+            bp->prior_p->next_pnt = bp->next_pnt;
+            bp->next_pnt = bp->prior_p = bp;
             split(bp, size);
             return bp;
         }
-        bp = bp->next_p;
+        bp = bp->next_pnt;
     }
    return NULL;
  
