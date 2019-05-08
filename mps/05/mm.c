@@ -81,6 +81,32 @@ void *mm_malloc(size_t size)
 /*
  * mm_free - Freeing a block does nothing.
  */
+
+void *first_fit(size_t size){
+    blockHDR *bp;
+    for(int i = 0; i <NUM_SIZE_CLASSES-1; i++){
+        if ((min_class_size[i] >= size) && (head[i].next_pnt != &head[i])){
+            bp = head[i].next_pnt;
+            head[i].next_pnt = bp->next_pnt;
+            bp->next_pnt->prior_pnt = &head[i];
+            bp->next_pnt == bp->prior_pnt = bp;
+            return bp;
+        }
+    }
+    b = head[NUM_SIZE_CLASSES-1].next_p;
+    while(bp != &head[NUM_SIZE_CLASSES-1]){
+        if(bp->size >= size){
+            bp->next_p->prior_p = bp->prior_p;
+            bp->prior_p->next_p = bp->next_p;
+            bp->next_p = bp->prior_p = bp;
+            split(bp, size);
+            return bp;
+        }
+        bp = bp->next_p;
+    }
+   return NULL;
+ 
+}
 void mm_free(void *ptr)
 {
 }
