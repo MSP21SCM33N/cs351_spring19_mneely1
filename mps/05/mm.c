@@ -38,7 +38,16 @@ struct footer{
  */
 int mm_init(void)
 {
+  blockHDR *pnt = mem_sbrk(ALIGN(BLK_HDR_SIZE+BLK_FTR_SIZE));
+  pnt->size = BLK_HDR_SIZE +BLK_FTR_SIZE;
+  pnt->*next_pnt = pnt;
+  pnt->*prior_p = pnt;
+
+  blockFTR *fpnt = (blockFTR*)((char*)mem_heap_hi()-BLK_FTR_SIZE+1);
+  fpnt->heap = pnt;
+
   return 0;
+
 }
 
 /* 
